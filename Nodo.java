@@ -7,3 +7,4 @@ class Nodo<T> {
         this.next = null;
     }
 }
+
