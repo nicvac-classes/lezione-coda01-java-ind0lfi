@@ -1,4 +1,3 @@
-//Implementare qui la classe Coda
 public class Coda<T> {
     private Nodo<T> head;
     private Nodo<T> tail;
@@ -7,21 +6,70 @@ public class Coda<T> {
         this.head = null;
         this.tail = null;
     }
-    public boolean isEmpty(){
-        if(head.dato==null){
-            return true;
-        }else{
-            return false;
+
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    public void enqueue(T dato) {
+        Nodo<T> nuovoNodo = new Nodo<>(dato);
+
+        if (isEmpty()) {
+            head = nuovoNodo;
+            tail = nuovoNodo;
+        } else {
+            tail.next = nuovoNodo;
+            tail = nuovoNodo;
         }
     }
-    public int size(){
-        int c=0;
-        Nodo<T> curr=head;
-        while(curr!=null){
-            curr=curr.next;
-            c++;
 
+    public T dequeue() {
+        if (isEmpty()) {
+            throw new RuntimeException("Coda vuota");
         }
-        return c;
+
+        T dato = head.dato;
+        head = head.next;
+
+        if (head == null) {
+            tail = null;
+        }
+
+        return dato;
+    }
+
+    public T peek() {
+        if (isEmpty()) {
+            throw new RuntimeException("Coda vuota");
+        }
+
+        return head.dato;
+    }
+
+    public int size() {
+        int contatore = 0;
+        Nodo<T> corrente = head;
+
+        while (corrente != null) {
+            contatore++;
+            corrente = corrente.next;
+        }
+
+        return contatore;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[TESTA] ");
+
+        Nodo<T> corrente = head;
+        while (corrente != null) {
+            sb.append(corrente.dato);
+            sb.append(" → ");
+            corrente = corrente.next;
+        }
+
+        sb.append("[FINE]");
+        return sb.toString();
     }
 }
